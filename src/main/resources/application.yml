@@ -1,0 +1,19 @@
+server:
+  port: 9090spring:
+  datasource:    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+  jpa:
+    show-sql: true    hibernate:      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+security:
+  jwt:
+    token:
+      secret-key: vivek954
+      expire-length: 360000
