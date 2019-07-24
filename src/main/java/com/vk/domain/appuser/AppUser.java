@@ -1,11 +1,13 @@
 package com.vk.domain.appuser;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class AppUser {
@@ -17,8 +19,8 @@ public class AppUser {
     private String password;
     private String fullname;
     private boolean enabled;
-    @OneToMany
-    private Set<Role> roles;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles = new HashSet<>();
     
 	public String getId() {
 		return id;

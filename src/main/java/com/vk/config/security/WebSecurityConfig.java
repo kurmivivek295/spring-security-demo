@@ -27,10 +27,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
     JwtTokenProvider jwtTokenProvider;
+	@Autowired
+	AppUserDetailService appUserDetailService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        UserDetailsService userDetailsService = appUserDetailService();
+        UserDetailsService userDetailsService = appUserDetailService;
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 
     }
@@ -49,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+        web.ignoring().antMatchers("/h2-console","/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
     }
 
     @Bean
@@ -67,9 +69,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationEntryPoint unauthorizedEntryPoint() {
         return (request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
                 "Unauthorized");
-    }
-
-    public UserDetailsService appUserDetailService() {
-        return new AppUserDetailService();
     }
 }
